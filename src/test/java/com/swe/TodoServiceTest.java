@@ -3,8 +3,10 @@ package com.swe;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.mockito.invocation.Invocation;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +30,9 @@ class TodoServiceTest {
         when(todoService.retrieveTodos("User")).thenReturn(allTodo);
         todoImpl.deleteTodosNotRelatedToSpring("User");
 
+        Collection<Invocation> invocations = Mockito.mockingDetails(todoService).getInvocations();
+        System.out.println(invocations.size());
+        
         verify(todoService, Mockito.never()).deleteTodo("spring");
         then(todoService).should().deleteTodo("Winter");
         then(todoService).should().deleteTodo("Summer");
