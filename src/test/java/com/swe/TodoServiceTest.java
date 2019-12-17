@@ -30,9 +30,7 @@ class TodoServiceTest {
         when(todoService.retrieveTodos("User")).thenReturn(allTodo);
         todoImpl.deleteTodosNotRelatedToSpring("User");
 
-        Collection<Invocation> invocations = Mockito.mockingDetails(todoService).getInvocations();
-        System.out.println(invocations.size());
-        
+        verify(todoService,times(2)).deleteTodo(anyString());
         verify(todoService, Mockito.never()).deleteTodo("spring");
         then(todoService).should().deleteTodo("Winter");
         then(todoService).should().deleteTodo("Summer");
